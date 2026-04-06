@@ -78,8 +78,8 @@ int64_t pa2_swap_endianness_of_int64(int64_t x)
     int64_t s = 0;
 
     for (int i = 0; i < 8; i = i + 1) {
-        s = x >> (i * 8) & 0xFF;
-        s = s << ((7 - i) * 8);
+        int64_t b = (x >> (i * 8)) & 0xFF;
+        s |= b << ((7 - i) * 8);
     }
     return s;
 }
@@ -261,7 +261,7 @@ struct matrix pa2_deserialize_matrix_in_row_major_order(uint8_t *byte_array, uin
             } else {
                 uint32_t row = i / r;
                 uint32_t col = i % r;
-                uint32_t j = col * r + row;
+                uint32_t j = row * c + col;
                 data[j] = x;
             }
         }
