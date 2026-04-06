@@ -265,7 +265,9 @@ struct matrix pa2_deserialize_matrix_in_row_major_order(uint8_t *byte_array, uin
                 data[j] = x;
             }
         }
+        
     }
+    return (struct matrix){ r, c, data };
 }
 
 /*
