@@ -109,10 +109,10 @@ void pa2_swap_row_major_vs_col_major(struct matrix mat)
         return;
     }
     
-    for (uint8_t i = 0; i < mat.n_cols; i = i + 1)
-        for (uint8_t j = 0; j < mat.n_rows; j = j + 1) {
-            uint32_t x = (uint32_t)j * mat.n_cols + i;
-            uint32_t y = (uint32_t)i * mat.n_rows + j;
+    for (uint8_t i = 0; i < mat.n_rows; i = i + 1)
+        for (uint8_t j = 0; j < mat.n_cols; j = j + 1) {
+            uint32_t x = (uint32_t)i * mat.n_cols + j;
+            uint32_t y = (uint32_t)j * mat.n_rows + i;
             t[y] = mat.data[x];
         }
     memcpy(mat.data, t, M * sizeof(int64_t));
@@ -236,7 +236,7 @@ struct matrix pa2_deserialize_matrix_in_row_major_order(uint8_t *byte_array, uin
         e = 8 + t * 8;
     }
 
-    if (byte_array_length != e) {
+    if (byte_array_length < e) {
             return badone;
     }
 
@@ -259,8 +259,8 @@ struct matrix pa2_deserialize_matrix_in_row_major_order(uint8_t *byte_array, uin
             if (RM == true) {
                 data[i] = x;
             } else {
-                uint32_t row = i / r;
-                uint32_t col = i % r;
+                uint32_t row = i % r;
+                uint32_t col = i / r;
                 uint32_t j = row * c + col;
                 data[j] = x;
             }
