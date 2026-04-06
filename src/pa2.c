@@ -111,8 +111,8 @@ void pa2_swap_row_major_vs_col_major(struct matrix mat)
     
     for (uint8_t i = 0; i < mat.n_rows; i = i + 1)
         for (uint8_t j = 0; j < mat.n_cols; j = j + 1) {
-            uint32_t x = (uint32_t)i * mat.n_cols + j;
-            uint32_t y = (uint32_t)j * mat.n_rows + i;
+            uint32_t x = (uint32_t)j * mat.n_rows + i;
+            uint32_t y = (uint32_t)i * mat.n_cols + j;
             t[y] = mat.data[x];
         }
     memcpy(mat.data, t, M * sizeof(int64_t));
